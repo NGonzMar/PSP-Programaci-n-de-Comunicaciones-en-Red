@@ -52,16 +52,19 @@ public class UDPClient {
 
         System.out.println("\nRecibiendo información entrante...");
 
-        DatagramPacket ipFinalRecibida = new DatagramPacket(buffer, buffer.length);
+        byte[] receiveData = new byte[1024];
+        
+        DatagramPacket ipFinalRecibida = new DatagramPacket(receiveData, receiveData.length);
         try {
             conector.receive(ipFinalRecibida);
+            System.out.println("esto es inforecibida-> " + new String(ipFinalRecibida.getData()));
         } catch (IOException e) {
             System.out.println("Error al recibir la información: " + e.getMessage());
             return;
         }
 
-        String infoFinalRecibida = new String(ipFinalRecibida.getData(), 0, ipFinalRecibida.getLength());
 
+        String infoFinalRecibida = new String(ipFinalRecibida.getData(), 0, ipFinalRecibida.getLength());
         System.out.println(ANSI_GREEN + infoFinalRecibida + ANSI_RESET);
 
         conector.close();
